@@ -2,12 +2,24 @@
 
 https://github.com/prajitachowdhury/Disaster-Pipeline
 #### Objective of project: 
-To analyze disaster data to build a model that classifies disaster messages.
+To analyze disaster data to build a model that classifies disaster messages.This project  includes a web app where an emergency worker can input a new message and get classification results in several categories.
 
 #### File Desriptions:
-1. process_data.py : Python file to run the ETL Process on the source data 
-2. train_simplifier.py: Python file to build and run Machine Learning pipeline model on the data loaded through previous file.
-3. run.py: Python file to run the web application that allows you to enter a message that gets appropriately classified.
+    App Folder
+    | - template
+         |- master.html # main page of web app
+         |- go.html # classification result page of web app
+    |- run.py # Flask file that runs app
+    Data Folder
+    | - disaster_categories.csv # data to process
+    | - disaster_messages.csv # data to process
+    | - process_data.py
+    | - InsertDatabaseName.db # database to save clean data to
+    Models Folder
+    |- train_classifier.py
+    |- classifier.pkl # saved model
+    README.md
+
 
 #### Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
