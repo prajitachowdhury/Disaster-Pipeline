@@ -21,6 +21,18 @@ import nltk
 nltk.download('punkt')
 
 def load_data(database_filepath):
+
+    '''
+    load data from the database
+    
+    Input: 
+    database_filepath : database loc
+ 
+    Returns:
+    X: X feature dataframe
+    Y: Y target dataframe for which we are predicting values
+    cols: list of names of categories   
+    '''
     engine = create_engine('sqlite:///%s' % database_filepath)
     print(engine)
     df = pd.read_sql_table('DisasterResponse.db',engine)
@@ -40,10 +52,21 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    '''
+    tokenize text
+    
+    '''
     return word_tokenize(text)
 
 
 def build_model():
+
+	'''
+	build model
+	
+	Input: None
+	Returns: model built using GridSearchCV
+	'''
     pipeline_cv = Pipeline([
         ('features', FeatureUnion([
 
@@ -74,12 +97,36 @@ def build_model():
     return pipeline
 
 def evaluate_model(model, X_test, Y_test, category_names):
+	'''
+	evaluate the performance of the model
+	
+	Input:
+	model : model used for training data
+	X_test ,Y_test : test data
+	category_names
+	
+	Returns:
+	f1_score of the model
+	'''
     y_pred = model.predict(X_test.values.flatten())
     test = y_pred.flatten()
+    for col in Y_test.columns:
+    	print("category: ", col)
+    	classification_report(Y_test[col], Y_pred[col])
     score = f1_score(y_pred, Y_test,average='weighted')
     return score
 
 def save_model(model, model_filepath):
+	'''
+	save model in pickle file
+	
+	Input: 
+	model : to be saved
+	model_filepath : loc of pickle file
+	
+	Returns: 
+	None
+	'''
     pickle.dump(model,open(model_filepath,'wb'))
 
 
